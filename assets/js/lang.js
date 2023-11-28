@@ -78,6 +78,9 @@ if (window.location.hash) {
       item.textContent = language.es[item.lang];
     });
   } else {
-    langSelector.value = "en";
+    langSelector.value = "es";
+    document.querySelectorAll("#translate").forEach((item) => {
+      item.textContent = language.es[item.lang];
+    });
   }
 }
