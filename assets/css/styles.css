@@ -671,6 +671,7 @@ img {
 .skills__circle,
 .languages__circle {
     display: inline-block;
+    flex-shrink: 0;
     width: 5px;
     height: 5px;
     background-color: var(--text-color);
