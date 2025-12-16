@@ -11,18 +11,19 @@ const showMenu = (toggleId, navId) => {
     });
   }
 };
-showMenu("nav-toggle", "nav-menu");
 
 /*==================== REMOVE MENU MOBILE ====================*/
-const navLink = document.querySelectorAll(".nav__link");
+function initNavigation() {
+  const navLink = document.querySelectorAll(".nav__link");
 
-function linkAction() {
-  const navMenu = document.getElementById("nav-menu");
-  // When we click on each nav__link, we remove the show-menu class
-  navMenu.classList.remove("show-menu");
+  function linkAction() {
+    const navMenu = document.getElementById("nav-menu");
+    // When we click on each nav__link, we remove the show-menu class
+    navMenu.classList.remove("show-menu");
+  }
+
+  navLink.forEach((n) => n.addEventListener("click", linkAction));
 }
-
-navLink.forEach((n) => n.addEventListener("click", linkAction));
 
 /*==================== SCROLL SECTIONS ACTIVE LINK ====================*/
 const sections = document.querySelectorAll("section[id]");
@@ -101,34 +102,6 @@ const skillsButton = document.getElementById("skills-button");
 const skillsSection = document.getElementById("skills");
 const skillsItems = document.querySelectorAll(".skills__name.showmore");
 
-// skillsButton.addEventListener('click', (e) => {
-//     e.preventDefault();
-//     if (skillsSection.classList.contains("show"))
-//         skillsButton.innerText = "See More"
-//     else skillsButton.innerText = "See Less"
-//     skillsSection.classList.toggle('show');
-//     skillsSection.classList.toggle('hide');
-//     skillsItems.forEach(item => {
-//         item.classList.toggle('hide')
-//         item.classList.toggle('show')
-//     })
-// })
-
-//Education Awards
-/*const educationAwardButton = document.getElementById('icpc__award-button')
-const educationAward = document.getElementById('icpc__award');
-
-educationAwardButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (educationAwardButton.innerText == "See More") {
-        educationAward.classList.add('show');
-        educationAwardButton.innerText = "See Less"
-    } else {
-        educationAward.classList.remove('show');
-        educationAwardButton.innerText = "See More"
-    }
-})*/
-
 /*==================== REDUCE THE SIZE AND PRINT ON AN A4 SHEET ====================*/
 function scaleCv() {
   document.body.classList.add("scale-cv");
@@ -146,7 +119,7 @@ let resumeButton = document.getElementById("resume-button");
 
 // Html2pdf options
 let opt = {
-  margin: 0,
+  margin: 4,
   filename: "cv-oscar-romero-silva",
   image: { type: "png", quality: 0.4 },
   html2canvas: { scale: 2 },
@@ -163,10 +136,22 @@ function generateResume() {
 }
 
 // When the button is clicked, it executes the three functions
-resumeButton.addEventListener("click", () => {
-  document.getElementById("generate-pdf-overlay").style.display = "block";
-  scaleCv();
-  generateResume().then(() => {
-    document.getElementById("generate-pdf-overlay").style.display = "none";
+if (resumeButton) {
+  resumeButton.addEventListener("click", () => {
+    document.getElementById("generate-pdf-overlay").style.display = "block";
+    scaleCv();
+    generateResume().then(() => {
+      document.getElementById("generate-pdf-overlay").style.display = "none";
+    });
   });
+}
+
+/*==================== INITIALIZE APP ====================*/
+// Esperar a que se carguen los datos dinámicos
+window.addEventListener("DOMContentLoaded", () => {
+  // Esperar un momento para que se carguen los datos
+  setTimeout(() => {
+    showMenu("nav-toggle", "nav-menu");
+    initNavigation();
+  }, 100);
 });
